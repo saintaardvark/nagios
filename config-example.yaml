@@ -1,0 +1,24 @@
+system:
+	output_dir:	./output
+contacts:
+	- id:					admin
+    name:				Administrator
+    email:			admin@example.com
+    prowl:			insert-api-key
+groups:
+	- id:					administrators
+    members:
+		  - admin
+hosts:
+	- name:			webserver.example.com
+		ipv4:			127.0.0.1
+		group:		administrators
+		services:
+			- http (check_http)
+	- name:			smtp.example.com
+		ipv4:			127.0.0.1
+		ipv6:			::1
+		group:		administrators
+		services:
+			- ping (check_ping!400.0,20%!800.0,60%)
+			- smtp (check_smtp)
