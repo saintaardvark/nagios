@@ -6,8 +6,13 @@ Create a simple configuration file in yaml and the script will create Nagios con
 
 2) Edit config.yaml
 
-3) ruby ./generate-config.rb
+3) ./build_config.rb
 
-## Nagios versions
+## Please note
 
-Tested with...
+The tool doesn't generate all configuration files, only these definitions is created:
+
+ - contacts
+ - contactgroups
+ - hosts
+ - services
