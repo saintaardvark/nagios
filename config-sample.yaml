@@ -1,5 +1,6 @@
 system:
-  output_dir:   ./output
+  output_dir:   ./output/simplenagios.cfg
+  postcmd:      <optional command to run after config is made>
 contacts:
   - id:         admin
     name:       Administrator
@@ -14,11 +15,10 @@ hosts:
     ipv4:     127.0.0.1
     group:    administrators
     services:
-      - http (check_http)
+      - http
   - name:     smtp.example.com
-    ipv4:     127.0.0.1
-    ipv6:     ::1
+    ip:       127.0.0.1
     group:    administrators
     services:
-      - ping (check_ping!400.0,20%!800.0,60%)
-      - smtp (check_smtp)
+      - check_ping!400.0,20%!800.0,60%)
+      - smtp
