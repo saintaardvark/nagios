@@ -52,3 +52,5 @@ config['hosts'].each do |host|
 end
 
 config_file.close
+
+exec(config['system']['postcmd']) if config['system']['postcmd']
