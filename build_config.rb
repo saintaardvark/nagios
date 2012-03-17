@@ -2,7 +2,6 @@
 # coding: utf-8
 
 require 'yaml'
-require 'ap'
 
 config = YAML.load_file("config.yaml")
 config_file = File.new( config['system']['output'], 'w')
