@@ -1,0 +1,3 @@
+dat_file_name:          status.dat
+dat_file_path:          /var/spool/nagios
+dat_file_server:        server.example.com
