@@ -1,2 +1,4 @@
 config.yaml
+status_config.yaml
+status.tmp
 output/*
