@@ -8,16 +8,18 @@ require 'yaml'
 
 # A bit of helpers
 def pretty_state(state)
-    states = [' UP ', 'WARN', 'CRIT', 'DISA']
-    colors = ['[32m', '[34m', '[31m', '[37m']
+    states = [' UP ', 'WARN', 'CRIT', 'DISA', 'UNKN']
+    colors = ['[32m', '[34m', '[31m', '[37m', '[37m']
     "\033" + colors[ state.to_i ] + states[ state.to_i ] + "\033[0m"
 end
 
 def print_row(row)
+    checked = row['has_been_checked'] == "0" ? false : true;
+    row['current_state'] = 4 if not checked
     print format("%20.20s", row['host_name']) + "  "
     print format("%-6s", row['service_description']) + "  "
-    print pretty_state(row['current_state']) + "  "
-    print Time.at(row['last_check'].to_i).to_s + "  "
+    print pretty_state(row['current_state']) + "    "
+    print format("%-25s", checked ? Time.at(row['last_check'].to_i).to_s : "NEVER" ) + "  "
     print row['plugin_output'] + "\n"
 end
 
