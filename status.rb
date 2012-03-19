@@ -5,9 +5,17 @@ require 'yaml'
 
 # A bit of helpers
 def pretty_state(state)
-    states = ['UP', 'WARNING', 'CRITICAL', 'DISABLED']
+    states = [' UP ', 'WARN', 'CRIT', 'DISA']
     colors = ['[32m', '[34m', '[31m', '[37m']
     "\033" + colors[ state.to_i ] + states[ state.to_i ] + "\033[0m"
+end
+
+def print_row(row)
+    print format("%20.20s", row['host_name']) + "  "
+    print format("%-6s", row['service_description']) + "  "
+    print pretty_state(row['current_state']) + "  "
+    print Time.at(row['last_check'].to_i).to_s + "  "
+    print row['plugin_output'] + "\n"
 end
 
 # Load configuration
@@ -48,11 +56,13 @@ end
 
 if not data['hoststatus'].nil?
     data['hoststatus'].each do |host|
-        puts host['host_name'] + "\t" + "PING\t" + pretty_state(host['current_state']) + "\t" + host['last_check'] + "\t" + host['plugin_output']
+        host['service_description'] = "PING"
+        print_row(host)
         if not data['servicestatus'].nil?
             data['servicestatus'].each do |service|
                 if service['host_name'] == host['host_name']
-                    puts "\t\t\t" + service['service_description'] + "\t" + pretty_state(service['current_state']) + "\t" + service['last_check'] + "\t" + service['plugin_output']
+                    service['host_name'] = ""
+                    print_row(service)
                 end
             end
         end
