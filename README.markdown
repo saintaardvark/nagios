@@ -1,14 +1,14 @@
-# Simple tool to generate Nagios configuration files
+# A couple of scripts to help a bit out with Nagios
 
-Create a simple configuration file in yaml and the script will create Nagios configuration files.
+## Generate Nagios configuration files
 
-1) cp config-example.yaml to config.yaml
+The file `build_config.rb` will read a configuration file in yaml and create Nagios configuration files.
 
-2) Edit config.yaml
+1) `cp config-example.yaml config.yaml`
+2) Edit `config.yaml`
+3) `./build_config.rb`
 
-3) ./build_config.rb
-
-## Please note
+### Please note
 
 The tool doesn't generate all configuration files, only these definitions is created:
 
@@ -16,3 +16,13 @@ The tool doesn't generate all configuration files, only these definitions is cre
  - contactgroups
  - hosts
  - services
+
+## Display nagios status in cli
+
+I don't really like watching my nagios status in an webinterface (that requires a nice blend of php and cgi!) so `status.rb` will read the nagios status.dat file and display host and service status information in cli.
+
+1) `cp status_config-sample.yaml status_config.yaml`
+2) Edit `status_config.yaml` (note: server is optional)
+3) `./status.rb`
+
+- Enjoy
