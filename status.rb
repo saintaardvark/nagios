@@ -1,6 +1,9 @@
 #!/usr/bin/env ruby
 # coding: utf-8
 
+# NAGIOS CLI STATUS
+# Will read the nagios status.dat file and print reasonable pretty output
+
 require 'yaml'
 
 # A bit of helpers
@@ -21,17 +24,16 @@ end
 # Load configuration
 config = YAML.load_file("status_config.yaml")
 
-if config['dat_file_server']
-    `scp -q #{config['dat_file_server']}:#{config['dat_file_path']}/#{config['dat_file_name']} status.tmp`
-    config['dat_file_path'] = '.'
-    config['dat_file_name'] = 'status.tmp'
+if config['server']
+    `scp -q #{config['server']}:#{config['dat_file']} status.tmp`
+    config['dat_file'] = './status.tmp'
 end
 
 # Parse nagios data file
 data = Hash.new
 capture_name = nil;
 capture_object = Hash.new
-datfile = File.new( config['dat_file_path'] + '/' + config['dat_file_name'], 'r')
+datfile = File.new( config['dat_file'], 'r' )
 while (line = datfile.gets)
     if line =~ /^([a-z]+) \{/
         capture_name = $1.to_s

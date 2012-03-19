@@ -1,3 +1,9 @@
-dat_file_name:          status.dat
-dat_file_path:          /var/spool/nagios
-dat_file_server:        server.example.com
+# Configuration for status.rb
+#
+# Path and filename to the nagios status.dat file
+dat_file:       /var/spool/nagios/status.dat
+#
+# Server is optional - if supplied, the script will scp the status.dat file
+# from the server on the above location and read it locallly.
+# If not supplied it will read the above file locally.
+server:         server.example.com
