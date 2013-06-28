@@ -7,3 +7,7 @@ dat_file:       /var/spool/nagios/status.dat
 # from the server on the above location and read it locallly.
 # If not supplied it will read the above file locally.
 server:         server.example.com
+#
+# If true, show all hosts and services with status.
+# If false, only show non-ok hosts and services
+showall:        true

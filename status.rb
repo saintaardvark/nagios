@@ -61,12 +61,12 @@ end
 if not data['hoststatus'].nil?
     data['hoststatus'].each do |host|
         host['service_description'] = "PING"
-        print_row(host)
+        print_row(host) if config['showall'] or host['current_state'] != '0'
         if not data['servicestatus'].nil?
             data['servicestatus'].each do |service|
                 if service['host_name'] == host['host_name']
-                    service['host_name'] = ""
-                    print_row(service)
+                    service['host_name'] = "" if config['showall']
+                    print_row(service) if config['showall'] or service['current_state'] != '0'
                 end
             end
         end
