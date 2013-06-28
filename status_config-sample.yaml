@@ -11,3 +11,6 @@ server:         server.example.com
 # If true, show all hosts and services with status.
 # If false, only show non-ok hosts and services
 showall:        true
+#
+# Show a state status summary
+status:         true

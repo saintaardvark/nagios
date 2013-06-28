@@ -58,17 +58,32 @@ if not data['info'].nil?
     puts "Last update at "+ Time.at(data['info'][0]['created'].to_i).to_s + " by nagios version " + data['info'][0]['version']
 end
 
+host_states = [0, 0, 0, 0, 0]
+service_states = [0, 0, 0, 0, 0]
+
 if not data['hoststatus'].nil?
     data['hoststatus'].each do |host|
         host['service_description'] = "PING"
+        host_states[ host['current_state'].to_i ] += 1
         print_row(host) if config['showall'] or host['current_state'] != '0'
         if not data['servicestatus'].nil?
             data['servicestatus'].each do |service|
                 if service['host_name'] == host['host_name']
+                    service_states[ service['current_state'].to_i ] += 1
                     service['host_name'] = "" if config['showall']
                     print_row(service) if config['showall'] or service['current_state'] != '0'
                 end
             end
         end
+    end
+end
+
+if config['status']
+    puts "States summary:"
+    host_states.each_with_index do |state, index|
+        puts "Hosts     " + pretty_state(index) + "  " + state.to_s if state > 0
+    end
+    service_states.each_with_index do |state, index|
+        puts "Services  " + pretty_state(index) + "  " + state.to_s if state > 0
     end
 end
